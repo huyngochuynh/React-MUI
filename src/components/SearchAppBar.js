@@ -8,6 +8,12 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import LoginForm from './LoginForm';
+import { Button } from "@mui/material";
+import { useState } from 'react';
+import { useContext } from 'react';
+
+import { AuthContext } from '../context/AuthContext';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,8 +58,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchAppBar() {
+  const [open, setOpen] = useState(false);
+  const { isLoggedIn, username, signOut, signIn } = useContext(AuthContext)
+  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} >
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -65,14 +82,16 @@ export default function SearchAppBar() {
           >
             <MenuIcon />
           </IconButton>
+          
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            {isLoggedIn ? username : "MUI"}
           </Typography>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -82,6 +101,31 @@ export default function SearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+
+          {
+            !isLoggedIn && <Button
+              color="red"
+              variant="outlined"
+              onClick={handleClickOpen}
+            >
+              Sign In
+            </Button>
+          }
+          {
+            isLoggedIn && <Button
+              color="red"
+              variant="outlined"
+              onClick={signOut}
+            >
+              Sign Out
+            </Button>
+          }
+
+          <LoginForm 
+            open={open} 
+            handleClose={handleClose}
+          />
+
         </Toolbar>
       </AppBar>
     </Box>

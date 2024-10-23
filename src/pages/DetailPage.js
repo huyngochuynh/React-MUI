@@ -2,9 +2,6 @@ import React from 'react'
 import { Box, Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import books from "../books.json";
-import BoxSx from '../components/BoxSx';
-import WovenImageList from '../components/WovenImageList';
-import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 
 
 function DetailPage() {
@@ -13,33 +10,26 @@ function DetailPage() {
     const book = books.find((book) => book.id === bookId)
 
     if(!book) return (
-        <Container sx={{ width: 900 }}>
-        <Typography variant="h3" marginTop={3}>
-            No book find
-        </Typography>
-    </Container>
+            <Typography variant="h3" marginTop={3}>
+                No book find
+            </Typography>
     )
 
 
   return (
     <Container sx={{ width: 900 }}>
-        <Typography variant="h3" marginTop={3}>
+         <Typography variant="h3" marginTop={3}>
             {book.title}
-        </Typography>
+        </Typography> 
 
         
         <Box marginTop={3} sx={{display: "flex" }}>
             {book.skills}
-            <WovenImageList />
         </Box> 
 
-        <Box marginTop={5} sx={{display: "flex" }} alignItems="center">
-            <AirplanemodeActiveIcon /> 
+        <Box marginTop={5} sx={{display: "flex" }} alignItems="center"> 
             {book.city}
         </Box>
-
-
-        <BoxSx />
 
     </Container>
   )
